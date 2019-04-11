@@ -18,9 +18,44 @@ public class OrderedList_inArraySlots
               \findMe is absent from this list.
      */
     public int indexOf( Integer findMe) {
-        return -1;
+        //return indexOfWhile(findMe);
+		
+		return indexOfRecursive(findMe, 0, this.size() - 1);
     }
+	
+	private int indexOfWhile ( Integer findMe ){
+		int pageToSeek, compare;
+		int low = 0;
+		int high = this.size() - 1;
+		while (low <= high){
+			pageToSeek = (high + low) / 2;
+			compare = Integer.compare(list_iAS.get(pageToSeek),findMe);
+			if (compare == 0)
+				return pageToSeek;
+			else if (compare == 1)
+				high = pageToSeek - 1;
+			else
+				low = pageToSeek + 1;
+		}
+		return -1;
+	}
     
+	private int indexOfRecursive ( Integer findMe, int low, int high ){
+		int pageToSeek = (high + low) / 2;
+		int compare = Integer.compare(list_iAS.get(pageToSeek), findMe);
+		
+		if (compare == 0)
+			return pageToSeek;
+		
+		if (low > high)
+			return -1;
+		
+		else
+			if (compare == 1)
+				return indexOfRecursive( findMe, low, pageToSeek - 1);
+			else 
+				return indexOfRecursive( findMe, pageToSeek + 1, high);
+	}
 
     // ------ code from previous assignments below here ----
 
